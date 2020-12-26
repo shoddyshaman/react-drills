@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from "react";
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  
+  constructor() {
+    super();
+
+    this.state = {
+      filterString:'',
+      ninjas: [ 'naruto','sasuke','shikamaru','hinata','choji']
+    }
+  }
+
+  handleChange(filter) {
+    this.setState({ filterString: filter });
+  }
+  
+  render () {
+    let ninjasToDisplay = this.state.ninjas
+    .filter((element,index) =>{
+      return element.includes(this.state.filterString)
+    })
+    .map((element,index) => {
+      return <h2 key={index}>{element}</h2>
+    })
+
+    return (
+      <div className="App"><br/>
+        <input onChange={ e => this.handleChange(e.target.value)} type = 'text' />
+        {ninjasToDisplay}
+      </div>
+    )
+  }
 }
 
 export default App;
